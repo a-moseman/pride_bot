@@ -57,12 +57,9 @@ public class Player {
 
     private void removeLevel(long prideToNextLevel) {
         level--;
-        pride += prideToNextLevel;
-        // protect player from getting pride nuked
-        // just gives a bit of a buffer as a nicety
-        if (pride < convertLevelToPride(level) / 2) {
-            pride = convertLevelToPride(level) / 2;
-        }
+        // protect from getting nuked
+        // but also punish for losing level
+        pride = convertLevelToPride(level) / 2;
     }
 
     private long convertLevelToPride(long level) {
