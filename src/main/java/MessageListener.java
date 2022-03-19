@@ -51,12 +51,10 @@ public class MessageListener extends ListenerAdapter { // TODO: rename
         if (!event.getAuthor().isBot()) { // filter out bot commands
             MessageChannel channel = event.getChannel();
             String authId = event.getAuthor().getId();
-            String authName = event.getAuthor().getName();
-            String authDiscriminator = event.getAuthor().getDiscriminator();
             String message = event.getMessage().getContentRaw();
             if (("" + message.charAt(0) + message.charAt(1)).equals(commandIndicator)) {
                 String[] command = message.substring(2).split(" ");
-                String response = bot.doCommand(command, prideDms.contains(authId));
+                String response = bot.doCommand(command, authId, prideDms.contains(authId));
                 channel.sendMessage(response).queue();
             }
         }

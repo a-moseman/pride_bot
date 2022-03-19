@@ -18,25 +18,25 @@ public class Bot {
         return playerManager.getPlayer(id);
     }
 
-    public String doCommand(String[] command, boolean isDungeonMaster) {
+    public String doCommand(String[] command, String authId, boolean isDungeonMaster) {
         // TODO: implement similarly to dented bot.
         switch (command[0]) {
             case "add":
                 if (isDungeonMaster) {
-                    return addPride(command[1], parseAdaptiveValue(command[2]));
+                    return addPride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
                 }
                 else {
                     return "Command only available to dungeon masters.";
                 }
             case "remove":
                 if (isDungeonMaster) {
-                    return removePride(command[1], parseAdaptiveValue(command[2]));
+                    return removePride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
                 }
                 else {
                     return "Command only available to dungeon masters.";
                 }
             case "stats":
-                return stats(command[1]);
+                return stats(authId);
             default:
                 return "";
         }

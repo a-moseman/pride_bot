@@ -42,7 +42,6 @@ public class Player {
             if (level == 1) {
                 deaths++;
                 pride = convertLevelToPride(1) / 2;
-                System.out.println(pride); // DEBUG
             }
             // otherwise just handle normally
             else {
