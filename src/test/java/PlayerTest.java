@@ -16,7 +16,7 @@ public class PlayerTest {
     public void removePride() {
         Player player = new Player("", "");
         player.addPride(40);
-        player.removePride(30);
+        player.removePride(20);
         assertEquals(1, player.getEgo());
         assertEquals(10, player.getPride());
     }

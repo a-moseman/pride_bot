@@ -63,7 +63,8 @@ public class MessageListener extends ListenerAdapter { // TODO: rename
             }
         }
 
-        // save TODO: make async
+        // save every hour on message
+        // TODO: make async
         if (System.nanoTime() - lastSaveTime >= 3600000000000l) { // if at least been an hour since last save
             bot.save();
             lastSaveTime = System.nanoTime();

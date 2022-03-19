@@ -37,7 +37,7 @@ public class Player {
         // TODO: test
         assert amount > 0;
         pride -= amount;
-        if (pride < 0) {
+        if (pride <= 0) {
             // case in which player dies, reset to level 1 with half of level 1's pride value (10 atm I believe)
             if (ego == 1) {
                 deaths++;
