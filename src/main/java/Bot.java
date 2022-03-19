@@ -66,6 +66,7 @@ public class Bot {
         output += "\n\tExample of leveling up ego: a player reaches 50 pride, they level up to ego level 2 and their pride is reduced to 10.";
         output += "\n\tA level of ego is lost upon reaching a pride of 0. Your ego is reduced by 1 and pride set to this lower level of egos half-way-point of pride.";
         output += "\n\tMore features will be added later on.";
+        return output;
     }
 
     private String stats(String id) {
