@@ -2,7 +2,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeAll;
 
 public class PlayerTest {
 
@@ -10,7 +9,7 @@ public class PlayerTest {
     public void addPride() {
         Player player = new Player("", "");
         player.addPride(40);
-        assertEquals(2, player.getLevel());
+        assertEquals(2, player.getEgo());
     }
 
     @Test
@@ -18,7 +17,7 @@ public class PlayerTest {
         Player player = new Player("", "");
         player.addPride(40);
         player.removePride(30);
-        assertEquals(1, player.getLevel());
+        assertEquals(1, player.getEgo());
         assertEquals(10, player.getPride());
     }
 
@@ -27,7 +26,7 @@ public class PlayerTest {
         Player player = new Player("", "");
         player.addPride(10);
         player.removePride(9999);
-        assertEquals(1, player.getLevel());
+        assertEquals(1, player.getEgo());
         assertEquals(1, player.getDeaths());
         assertEquals(10, player.getPride());
     }
@@ -36,7 +35,7 @@ public class PlayerTest {
     public void multipleLevelUp() {
         Player player = new Player("", "");
         player.addPride(120);
-        assertEquals(3, player.getLevel());
+        assertEquals(3, player.getEgo());
         assertEquals(0, player.getPride());
     }
 }

@@ -40,7 +40,12 @@ public class Bot {
                     return "Command only available to dungeon masters.";
                 }
             case "stats":
-                return stats(authId);
+                if (command.length > 1) {
+                    return stats(Util.getIdFromMention(command[1]));
+                }
+                else {
+                    return stats(authId);
+                }
             default:
                 return "";
         }
@@ -49,10 +54,10 @@ public class Bot {
     private String stats(String id) {
         Player player = playerManager.getPlayer(id);
         long pride = player.getPride();
-        long level = player.getLevel();
+        long level = player.getEgo();
         long deaths = player.getDeaths();
         return "Pride: " + pride +
-                "\nLevel: " + level +
+                "\nEgo: " + level +
                 "\nDeaths: " + deaths;
     }
 
@@ -81,11 +86,11 @@ public class Bot {
     private String addPride(String id, int amount) {
         // TODO: optimize
         Player player = playerManager.getPlayer(id);
-        long oldLevel = player.getLevel();
+        long oldLevel = player.getEgo();
         player.addPride(amount);
         String output = player.getName() + " gained " + amount + " pride.";
-        if (player.getLevel() > oldLevel) {
-            output += "\nAdditionally, they leveled up to level " + player.getLevel() + "!"; // TODO: add randomized level gain messages?
+        if (player.getEgo() > oldLevel) {
+            output += "\nAdditionally, they leveled up their ego to level " + player.getEgo() + "!"; // TODO: add randomized level gain messages?
         }
         return output;
     }
@@ -93,7 +98,7 @@ public class Bot {
     private String removePride(String id, int amount) {
         // TODO: optimize
         Player player = playerManager.getPlayer(id);
-        long oldLevel = player.getLevel();
+        long oldLevel = player.getEgo();
         long oldDeaths = player.getDeaths();
         player.removePride(amount);
         String output = player.getName() + " lost " + amount + " pride.";
@@ -101,8 +106,8 @@ public class Bot {
             output += "\nUnfortunately, they have died!"; // TODO: add randomized death messages
             output += "\nThankfully, they have been resurrected by the Great God Steve!";
         }
-        else if (oldLevel > player.getLevel()) {
-            output += "\nUnfortunately, they have lost a level!"; // TODO: add randomized level loss messages?
+        else if (oldLevel > player.getEgo()) {
+            output += "\nUnfortunately, they have lost a level of ego!"; // TODO: add randomized level loss messages?
         }
         return output;
     }

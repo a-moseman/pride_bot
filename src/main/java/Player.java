@@ -3,14 +3,14 @@ public class Player {
     private String name;
 
     private long pride;
-    private long level;
+    private long ego;
     private long deaths;
 
     public Player(String id, String name) {
         this.ID = id;
         this.name = name;
         this.pride = 0;
-        this.level = 1;
+        this.ego = 1;
         this.deaths = 0;
     }
 
@@ -19,7 +19,7 @@ public class Player {
      */
     public Player loadData(long pride, long level, long deaths) {
         this.pride = pride;
-        this.level = level;
+        this.ego = level;
         this.deaths = deaths;
         return this;
     }
@@ -28,8 +28,8 @@ public class Player {
         assert amount > 0;
         pride += amount;
         // level up, converting pride into levels, until complete
-        while (pride >= convertLevelToPride(level + 1)) {
-            addLevel(convertLevelToPride(level + 1));
+        while (pride >= convertLevelToPride(ego + 1)) {
+            addLevel(convertLevelToPride(ego + 1));
         }
     }
 
@@ -39,27 +39,27 @@ public class Player {
         pride -= amount;
         if (pride < 0) {
             // case in which player dies, reset to level 1 with half of level 1's pride value (10 atm I believe)
-            if (level == 1) {
+            if (ego == 1) {
                 deaths++;
                 pride = convertLevelToPride(1) / 2;
             }
             // otherwise just handle normally
             else {
-                removeLevel(convertLevelToPride(level));
+                removeLevel(convertLevelToPride(ego));
             }
         }
     }
 
     private void addLevel(long prideToNextLevel) {
-        level++;
+        ego++;
         pride -= prideToNextLevel;
     }
 
     private void removeLevel(long prideToNextLevel) {
-        level--;
+        ego--;
         // protect from getting nuked
         // but also punish for losing level
-        pride = convertLevelToPride(level) / 2;
+        pride = convertLevelToPride(ego) / 2;
     }
 
     private long convertLevelToPride(long level) {
@@ -84,8 +84,8 @@ public class Player {
         return pride;
     }
 
-    public long getLevel() {
-        return level;
+    public long getEgo() {
+        return ego;
     }
 
     public long getDeaths() {
