@@ -46,9 +46,26 @@ public class Bot {
                 else {
                     return stats(authId);
                 }
+            case "help":
+                return help();
             default:
                 return "";
         }
+    }
+
+    private String help() {
+        String output = "Commands:";
+        output += "\n\tp>stats <mention> - Get user stats. The <mention> is optional";
+        output += "\n\tp>add <mention> <adaptive value> - (pride_dm) Add pride to the player. Adaptive value examples: 23, 1d4, 2d6, etc.";
+        output += "\n\tp>remove <mention> <adaptive value> - (pride_dm) Remove from a player. See p>add for adaptive value examples.";
+        output += "\n\tp>help - Get a list of commands and information on pride_bot";
+        output += "\n\nInfo:";
+        output += "\n\tPride can be given or taken from players by a user with a role named pride_dm exactly.";
+        output += "\n\tEgo is something gained upon reaching a certain threshold amount of pride, resulting in the pride being converting into the level of ego.";
+        output += "\n\tThe threshold and value of a level of ego follows the pattern:  level 2 ego = 40 pride, level 3 ego = 80 pride, level 4 ego = 160 pride, etc.";
+        output += "\n\tExample of leveling up ego: a player reaches 50 pride, they level up to ego level 2 and their pride is reduced to 10.";
+        output += "\n\tA level of ego is lost upon reaching a pride of 0. Your ego is reduced by 1 and pride set to this lower level of egos half-way-point of pride.";
+        output += "\n\tMore features will be added later on.";
     }
 
     private String stats(String id) {

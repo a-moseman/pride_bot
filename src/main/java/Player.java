@@ -28,7 +28,7 @@ public class Player {
         assert amount > 0;
         pride += amount;
         // level up, converting pride into levels, until complete
-        while (pride >= convertLevelToPride(ego + 1)) {
+        while (pride > convertLevelToPride(ego + 1)) {
             addLevel(convertLevelToPride(ego + 1));
         }
     }
