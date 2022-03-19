@@ -18,6 +18,10 @@ public class Bot {
         return playerManager.getPlayer(id);
     }
 
+    public void save() {
+        playerManager.save();
+    }
+
     public String doCommand(String[] command, String authId, boolean isDungeonMaster) {
         // TODO: implement similarly to dented bot.
         switch (command[0]) {
@@ -43,18 +47,16 @@ public class Bot {
     }
 
     private String stats(String id) {
-        // TODO: test
         Player player = playerManager.getPlayer(id);
-        int pride = player.getPride();
-        int level = player.getLevel();
-        int deaths = player.getDeaths();
+        long pride = player.getPride();
+        long level = player.getLevel();
+        long deaths = player.getDeaths();
         return "Pride: " + pride +
                 "\nLevel: " + level +
                 "\nDeaths: " + deaths;
     }
 
     private int parseAdaptiveValue(String text) {
-        // TODO: test
         int count = 0;
         String temp = "";
         boolean hadDDelimiter = false;
@@ -62,6 +64,7 @@ public class Bot {
             if (c == 'd' || c == 'D') {
                 count = Integer.parseInt(temp);
                 hadDDelimiter = true;
+                temp = "";
             }
             else {
                 temp += c;
@@ -71,15 +74,14 @@ public class Bot {
             return DiceRoller.roll(Integer.parseInt(temp), count);
         }
         else {
-            return Integer.parseInt(temp);
+            return count;
         }
     }
 
     private String addPride(String id, int amount) {
-        // TODO: test
         // TODO: optimize
         Player player = playerManager.getPlayer(id);
-        int oldLevel = player.getLevel();
+        long oldLevel = player.getLevel();
         player.addPride(amount);
         String output = player.getName() + " gained " + amount + " pride.";
         if (player.getLevel() > oldLevel) {
@@ -89,11 +91,10 @@ public class Bot {
     }
 
     private String removePride(String id, int amount) {
-        // TODO: test
         // TODO: optimize
         Player player = playerManager.getPlayer(id);
-        int oldLevel = player.getLevel();
-        int oldDeaths = player.getDeaths();
+        long oldLevel = player.getLevel();
+        long oldDeaths = player.getDeaths();
         player.removePride(amount);
         String output = player.getName() + " lost " + amount + " pride.";
         if (oldDeaths < player.getDeaths()) {

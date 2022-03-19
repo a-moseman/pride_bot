@@ -2,9 +2,9 @@ public class Player {
     private final String ID;
     private String name;
 
-    private int pride;
-    private int level;
-    private int deaths;
+    private long pride;
+    private long level;
+    private long deaths;
 
     public Player(String id, String name) {
         this.ID = id;
@@ -17,14 +17,14 @@ public class Player {
     /**
      * Should be invoked during player instantiation when loading from json.
      */
-    public Player loadData(int pride, int level, int deaths) {
+    public Player loadData(long pride, long level, long deaths) {
         this.pride = pride;
         this.level = level;
         this.deaths = deaths;
         return this;
     }
 
-    public void addPride(int amount) {
+    public void addPride(long amount) {
         assert amount > 0;
         pride += amount;
         // level up, converting pride into levels, until complete
@@ -33,7 +33,7 @@ public class Player {
         }
     }
 
-    public void removePride(int amount) {
+    public void removePride(long amount) {
         // TODO: test
         assert amount > 0;
         pride -= amount;
@@ -50,12 +50,12 @@ public class Player {
         }
     }
 
-    private void addLevel(int prideToNextLevel) {
+    private void addLevel(long prideToNextLevel) {
         level++;
         pride -= prideToNextLevel;
     }
 
-    private void removeLevel(int prideToNextLevel) {
+    private void removeLevel(long prideToNextLevel) {
         level--;
         pride += prideToNextLevel;
         // protect player from getting pride nuked
@@ -65,8 +65,8 @@ public class Player {
         }
     }
 
-    private int convertLevelToPride(int level) {
-        return (int) (5 * Math.pow(2, level + 1));
+    private long convertLevelToPride(long level) {
+        return (long) (5 * Math.pow(2, level + 1));
     }
 
     //___Getter Methods___\\
@@ -83,15 +83,15 @@ public class Player {
         this.name = name;
     }
 
-    public int getPride() {
+    public long getPride() {
         return pride;
     }
 
-    public int getLevel() {
+    public long getLevel() {
         return level;
     }
 
-    public int getDeaths() {
+    public long getDeaths() {
         return deaths;
     }
 }

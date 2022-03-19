@@ -13,6 +13,8 @@ public class MessageListener extends ListenerAdapter { // TODO: rename
     private String commandIndicator = "p>";
     private Bot bot;
 
+    private long lastSaveTime = 0;
+
     public MessageListener(String token) {
         try {
             JDA jda = JDABuilder.createDefault(token)
@@ -52,11 +54,19 @@ public class MessageListener extends ListenerAdapter { // TODO: rename
             MessageChannel channel = event.getChannel();
             String authId = event.getAuthor().getId();
             String message = event.getMessage().getContentRaw();
-            if (("" + message.charAt(0) + message.charAt(1)).equals(commandIndicator)) {
-                String[] command = message.substring(2).split(" ");
-                String response = bot.doCommand(command, authId, prideDms.contains(authId));
-                channel.sendMessage(response).queue();
+            if (message.length() > 1) {
+                if (("" + message.charAt(0) + message.charAt(1)).equals(commandIndicator)) {
+                    String[] command = message.substring(2).split(" ");
+                    String response = bot.doCommand(command, authId, prideDms.contains(authId));
+                    channel.sendMessage(response).queue();
+                }
             }
+        }
+
+        // save TODO: make async
+        if (System.nanoTime() - lastSaveTime >= 3600000000000l) { // if at least been an hour since last save
+            bot.save();
+            lastSaveTime = System.nanoTime();
         }
     }
 }
