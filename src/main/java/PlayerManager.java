@@ -60,7 +60,7 @@ public class PlayerManager {
         String name = player.getName();
         long pride = player.getPride();
         long level = player.getEgo();
-        long deaths = player.getDeaths();
+        long deaths = player.getShame();
         JSONObject playerJson = new JSONObject();
         playerJson.put("id", id);
         playerJson.put("name", name);

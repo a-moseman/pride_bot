@@ -4,14 +4,14 @@ public class Player {
 
     private long pride;
     private long ego;
-    private long deaths;
+    private long shame;
 
     public Player(String id, String name) {
         this.ID = id;
         this.name = name;
         this.pride = 10;
         this.ego = 1;
-        this.deaths = 0;
+        this.shame = 0;
     }
 
     /**
@@ -20,7 +20,7 @@ public class Player {
     public Player loadData(long pride, long level, long deaths) {
         this.pride = pride;
         this.ego = level;
-        this.deaths = deaths;
+        this.shame = deaths;
         return this;
     }
 
@@ -39,7 +39,7 @@ public class Player {
         if (pride <= 0) {
             // case in which player dies, reset to level 1 with half of level 1's pride value (10 atm I believe)
             if (ego == 1) {
-                deaths++;
+                shame++;
                 pride = convertLevelToPride(1) / 2;
             }
             // otherwise just handle normally
@@ -87,7 +87,7 @@ public class Player {
         return ego;
     }
 
-    public long getDeaths() {
-        return deaths;
+    public long getShame() {
+        return shame;
     }
 }

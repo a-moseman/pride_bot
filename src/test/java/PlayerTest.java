@@ -27,7 +27,7 @@ public class PlayerTest {
         player.addPride(10);
         player.removePride(9999);
         assertEquals(1, player.getEgo());
-        assertEquals(1, player.getDeaths());
+        assertEquals(1, player.getShame());
         assertEquals(10, player.getPride());
     }
 

@@ -71,12 +71,9 @@ public class Bot {
 
     private String stats(String id) {
         Player player = playerManager.getPlayer(id);
-        long pride = player.getPride();
-        long level = player.getEgo();
-        long deaths = player.getDeaths();
-        return "Pride: " + pride +
-                "\nEgo: " + level +
-                "\nDeaths: " + deaths;
+        return "Pride: " + player.getPride() +
+                "\nEgo: " + player.getEgo() +
+                "\nShame: " + player.getShame();
     }
 
     private int parseAdaptiveValue(String text) {
@@ -117,10 +114,10 @@ public class Bot {
         // TODO: optimize
         Player player = playerManager.getPlayer(id);
         long oldLevel = player.getEgo();
-        long oldDeaths = player.getDeaths();
+        long oldDeaths = player.getShame();
         player.removePride(amount);
         String output = player.getName() + " lost " + amount + " pride.";
-        if (oldDeaths < player.getDeaths()) {
+        if (oldDeaths < player.getShame()) {
             output += "\nUnfortunately, they have died!"; // TODO: add randomized death messages
             output += "\nThankfully, they have been resurrected by the Great God Steve!";
         }

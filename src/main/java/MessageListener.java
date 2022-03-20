@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MessageListener extends ListenerAdapter { // TODO: rename
     private String commandIndicator = "p>";
