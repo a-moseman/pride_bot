@@ -8,16 +8,18 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MessageListener extends ListenerAdapter { // TODO: rename
     private String commandIndicator = "p>";
     private Bot bot;
+    private JDA jda;
 
     private long lastSaveTime = 0;
 
     public MessageListener(String token) {
         try {
-            JDA jda = JDABuilder.createDefault(token)
+            jda = JDABuilder.createDefault(token)
                     .build();
             jda.addEventListener(this);
         }
@@ -29,19 +31,6 @@ public class MessageListener extends ListenerAdapter { // TODO: rename
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        // check to see if any new members or changes to member names
-        // TODO: attempt to optimize
-        for (Member member : event.getGuild().getMembers()) {
-            // add if not seen before
-            if (!bot.knowsPlayer(member.getId())) {
-                bot.addPlayer(member.getId(), new Player(member.getId(), member.getEffectiveName()));
-            }
-            // update name if changed
-            else if (!member.getEffectiveName().equals(bot.getPlayer(member.getId()).getName())){
-                bot.getPlayer(member.getId()).setName(member.getEffectiveName());
-            }
-        }
-
         // determine pride dms
         // TODO: attempt to optimize
         Guild guild = event.getGuild();
@@ -54,6 +43,14 @@ public class MessageListener extends ListenerAdapter { // TODO: rename
             MessageChannel channel = event.getChannel();
             String authId = event.getAuthor().getId();
             String message = event.getMessage().getContentRaw();
+
+            if (!bot.knowsPlayer(authId)) {
+                bot.addPlayer(authId, new Player(authId, event.getAuthor().getName()));
+            }
+            else if (!bot.getPlayer(authId).getName().equals(event.getAuthor().getName())){
+                bot.getPlayer(authId).setName(event.getAuthor().getName());
+            }
+
             if (message.length() > 1) {
                 if (("" + message.charAt(0) + message.charAt(1)).equals(commandIndicator)) {
                     String[] command = message.substring(2).split(" ");
