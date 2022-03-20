@@ -29,7 +29,7 @@ public class Player {
 
     public void addPride(long amount) {
         assert amount > 0;
-        pride += amount + ascendancy;
+        pride = amount + ascendancy - shame > 0 ? pride + amount + ascendancy - shame : pride;
         // level up, converting pride into levels, until complete
         while (pride >= convertEgoToPride(ego + 1)) {
             addEgo(convertEgoToPride(ego + 1));
@@ -38,7 +38,7 @@ public class Player {
 
     public void removePride(long amount) {
         assert amount > 0;
-        pride = pride - amount + ascendancy > 0 ? pride - amount + amount : 0;
+        pride = amount - ascendancy + shame > 0 ? pride - amount + ascendancy - shame : 0;
         if (pride <= 0) {
             // case in which player dies, reset to level 1 with half of level 1's pride value (10 atm I believe)
             if (ego == 1) {
