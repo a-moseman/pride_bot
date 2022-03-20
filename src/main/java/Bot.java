@@ -28,8 +28,17 @@ public class Bot {
             return "Invalid command.";
         }
         switch (command[0]) {
+            case "ascend":
+                if (playerManager.getPlayer(authId).canAscend()) {
+                    playerManager.getPlayer(authId).ascend();
+                    return "You have ascended!";
+                }
+                else {
+                    return "You do not have enough ego to ascend.";
+                }
             case "add":
                 if (command.length < 3) { return "Missing arguments."; }
+                if (command.length > 3) { return "Extra arguments."; }
                 if (isDungeonMaster) {
                     return addPride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
                 }
@@ -38,6 +47,7 @@ public class Bot {
                 }
             case "remove":
                 if (command.length < 3) { return "Missing arguments."; }
+                if (command.length > 3) { return "Extra arguments."; }
                 if (isDungeonMaster) {
                     return removePride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
                 }
@@ -78,7 +88,8 @@ public class Bot {
         Player player = playerManager.getPlayer(id);
         return "Pride: " + player.getPride() +
                 "\nEgo: " + player.getEgo() +
-                "\nShame: " + player.getShame();
+                "\nShame: " + player.getShame() +
+                "\nAscendancy: " + player.getAscendancy();
     }
 
     private int parseAdaptiveValue(String text) {
