@@ -31,8 +31,8 @@ public class Player {
         assert amount > 0;
         pride += amount;
         // level up, converting pride into levels, until complete
-        while (pride > convertLevelToPride(ego + 1)) {
-            addLevel(convertLevelToPride(ego + 1));
+        while (pride >= convertEgoToPride(ego + 1)) {
+            addEgo(convertEgoToPride(ego + 1));
         }
     }
 
@@ -43,29 +43,45 @@ public class Player {
             // case in which player dies, reset to level 1 with half of level 1's pride value (10 atm I believe)
             if (ego == 1) {
                 shame++;
-                pride = convertLevelToPride(1) / 2;
+                pride = convertEgoToPride(1) / 2;
             }
             // otherwise just handle normally
             else {
-                removeLevel(convertLevelToPride(ego));
+                removeEgo();
             }
         }
     }
 
-    private void addLevel(long prideToNextLevel) {
+    private void addEgo(long prideToNextEgo) {
         ego++;
-        pride -= prideToNextLevel;
+        pride -= prideToNextEgo;
     }
 
-    private void removeLevel(long prideToNextLevel) {
+    private void removeEgo() {
         ego--;
         // protect from getting nuked
         // but also punish for losing level
-        pride = convertLevelToPride(ego) / 2;
+        pride = convertEgoToPride(ego) / 2;
     }
 
-    private long convertLevelToPride(long level) {
-        return (long) (5 * Math.pow(2, level + 1));
+    public void ascend() {
+        if (convertAscendancyToEgo(ascendancy + 1) < ego) {
+            ego -= convertAscendancyToEgo(ascendancy + 1);
+            ascendancy++;
+        }
+    }
+
+    public boolean canAscend() {
+        // TODO: test
+        return convertAscendancyToEgo(ascendancy + 1) > ego;
+    }
+
+    private long convertEgoToPride(long x) {
+        return (long) (5 * Math.pow(2, x + 1));
+    }
+
+    private long convertAscendancyToEgo(long x) {
+        return (long) (Math.pow(2, Math.log10(2) * x) * Math.pow(5, Math.log10(2) * x + 1));
     }
 
     //___Getter Methods___\\
