@@ -9,7 +9,7 @@ public class Player {
     public Player(String id, String name) {
         this.ID = id;
         this.name = name;
-        this.pride = 0;
+        this.pride = 10;
         this.ego = 1;
         this.deaths = 0;
     }
@@ -34,7 +34,6 @@ public class Player {
     }
 
     public void removePride(long amount) {
-        // TODO: test
         assert amount > 0;
         pride -= amount;
         if (pride <= 0) {
