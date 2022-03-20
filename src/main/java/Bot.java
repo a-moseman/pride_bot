@@ -24,8 +24,12 @@ public class Bot {
 
     public String doCommand(String[] command, String authId, boolean isDungeonMaster) {
         // TODO: implement similarly to dented bot.
+        if (command.length < 1) {
+            return "Invalid command.";
+        }
         switch (command[0]) {
             case "add":
+                if (command.length < 3) { return "Missing arguments."; }
                 if (isDungeonMaster) {
                     return addPride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
                 }
@@ -33,6 +37,7 @@ public class Bot {
                     return "Command only available to dungeon masters.";
                 }
             case "remove":
+                if (command.length < 3) { return "Missing arguments."; }
                 if (isDungeonMaster) {
                     return removePride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
                 }
@@ -49,7 +54,7 @@ public class Bot {
             case "help":
                 return help();
             default:
-                return "";
+                return "Invalid command.";
         }
     }
 
