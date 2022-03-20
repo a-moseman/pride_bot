@@ -5,6 +5,7 @@ public class Player {
     private long pride;
     private long ego;
     private long shame;
+    private long ascendancy;
 
     public Player(String id, String name) {
         this.ID = id;
@@ -12,15 +13,17 @@ public class Player {
         this.pride = 10;
         this.ego = 1;
         this.shame = 0;
+        this.ascendancy = 0;
     }
 
     /**
      * Should be invoked during player instantiation when loading from json.
      */
-    public Player loadData(long pride, long level, long deaths) {
+    public Player loadData(long pride, long level, long shame, long ascendancy) {
         this.pride = pride;
         this.ego = level;
-        this.shame = deaths;
+        this.shame = shame;
+        this.ascendancy = ascendancy;
         return this;
     }
 
@@ -89,5 +92,9 @@ public class Player {
 
     public long getShame() {
         return shame;
+    }
+
+    public long getAscendancy() {
+        return ascendancy;
     }
 }

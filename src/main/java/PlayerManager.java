@@ -51,8 +51,9 @@ public class PlayerManager {
         String name = (String) jsonObject.get("name");
         long pride = (long) jsonObject.get("pride");
         long level = (long) jsonObject.get("level");
-        long deaths = (long) jsonObject.get("deaths");
-        return new Player(id, name).loadData(pride, level, deaths);
+        long shame = (long) jsonObject.get("shame");
+        long ascendancy = (long) jsonObject.get("ascendancy");
+        return new Player(id, name).loadData(pride, level, shame, ascendancy);
     }
 
     private JSONObject convertPlayerToJson(Player player) {
@@ -60,13 +61,15 @@ public class PlayerManager {
         String name = player.getName();
         long pride = player.getPride();
         long level = player.getEgo();
-        long deaths = player.getShame();
+        long shame = player.getShame();
+        long ascendancy = player.getAscendancy();
         JSONObject playerJson = new JSONObject();
         playerJson.put("id", id);
         playerJson.put("name", name);
         playerJson.put("pride", pride);
         playerJson.put("level", level);
-        playerJson.put("deaths", deaths);
+        playerJson.put("shame", shame);
+        playerJson.put("ascendancy", ascendancy);
         return playerJson;
     }
 
