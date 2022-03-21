@@ -74,6 +74,7 @@ public class Bot {
     }
 
     private String leaderboard() {
+        // TODO: make equal players same rank
         List<Player> players = PLAYER_MANAGER.getPlayers();
         Collections.sort(players);
         String output = "Leaderboard:";
