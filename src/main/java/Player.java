@@ -1,4 +1,4 @@
-public class Player {
+public class Player implements Comparable<Player>{
     private final String ID;
     private String name;
     private long pride;
@@ -83,6 +83,8 @@ public class Player {
         return (long) (Math.pow(2, Math.log10(2) * x) * Math.pow(5, Math.log10(2) * x + 1));
     }
 
+    //___For UI___\\
+
     public long prideToNextEgo() {
         return convertEgoToPride(ego + 1) - pride;
     }
@@ -119,5 +121,29 @@ public class Player {
 
     public long getAscendancy() {
         return ascendancy;
+    }
+
+    //___MISC.___\\
+
+    @Override
+    public int compareTo(Player other) {
+        // TODO: test
+        if (this.getAscendancy() == other.getAscendancy() &&
+            this.getEgo() == other.getEgo() &&
+            this.getPride() == other.getPride()) {
+            return 0;
+        }
+        if (this.getAscendancy() - this.getShame() > other.getAscendancy() - other.getShame()) {
+            return 1;
+        }
+        else if (this.getEgo() > other.getEgo()) {
+            return 1;
+        }
+        else if (this.getPride() > other.getPride()) {
+            return 1;
+        }
+        else {
+            return -1;
+        }
     }
 }

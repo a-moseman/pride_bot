@@ -1,3 +1,6 @@
+import java.util.Collections;
+import java.util.List;
+
 public class Bot {
     private final PlayerManager PLAYER_MANAGER;
 
@@ -63,9 +66,22 @@ public class Bot {
                 }
             case "help":
                 return help();
+            case "leaderboard":
+                return leaderboard();
             default:
                 return "Invalid command.";
         }
+    }
+
+    private String leaderboard() {
+        List<Player> players = PLAYER_MANAGER.getPlayers();
+        Collections.sort(players);
+        String output = "Leaderboard:";
+        for (int i = 0; i < 10; i++) {
+            Player player = players.get(i);
+            output += "\n\t" + (i + 1) + ". " + player.getName();
+        }
+        return output;
     }
 
     private String help() {
@@ -73,6 +89,7 @@ public class Bot {
         output += "\n\tp>stats <mention> - Get user stats. The <mention> is optional";
         output += "\n\tp>add <mention> <adaptive value> - (pride_dm) Add pride to the player. Adaptive value examples: 23, 1d4, 2d6, etc.";
         output += "\n\tp>remove <mention> <adaptive value> - (pride_dm) Remove from a player. See p>add for adaptive value examples.";
+        output += "\n\tp>leaderboard - get the leaderboard";
         output += "\n\tp>help - Get a list of commands and information on pride_bot";
         output += "\n\nInfo:";
         output += "\n\tPride can be given or taken from players by a user with a role named pride_dm exactly.";

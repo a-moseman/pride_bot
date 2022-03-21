@@ -4,6 +4,7 @@ import org.json.simple.parser.JSONParser;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Hashtable;
+import java.util.List;
 
 public class PlayerManager {
     private final String PATH = "pride_bot.players.json";
@@ -91,5 +92,9 @@ public class PlayerManager {
 
     public void removePride(String id, int amount) {
         PLAYERS.get(id).removePride(amount);
+    }
+
+    public List<Player> getPlayers() {
+        return (List<Player>) PLAYERS.values();
     }
 }
