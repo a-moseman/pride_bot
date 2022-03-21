@@ -47,4 +47,11 @@ public class PlayerTest {
         assertEquals(1, player.getAscendancy());
         assertEquals(1, player.getEgo());
     }
+
+    @Test
+    public void testAscendancyShameEffect() {
+        Player player = new Player("", "").loadData(10, 1, 2, 3);
+        player.addPride(1);
+        assertEquals(12, player.getPride());
+    }
 }
