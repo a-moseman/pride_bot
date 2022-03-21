@@ -32,41 +32,26 @@ public class Bot {
         }
         switch (command[0]) {
             case "ascend":
-                if (PLAYER_MANAGER.getPlayer(authId).canAscend()) {
-                    PLAYER_MANAGER.getPlayer(authId).ascend();
-                    return "You have ascended!";
-                }
-                else {
-                    return "You do not have enough ego to ascend.";
-                }
+                if (command.length > 1) {return "Extra arguments.";}
+                return ascend(authId);
             case "add":
-                if (command.length < 3) { return "Missing arguments."; }
-                if (command.length > 3) { return "Extra arguments."; }
-                if (isDungeonMaster) {
-                    return addPride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
-                }
-                else {
-                    return "Command only available to dungeon masters.";
-                }
+                if (command.length < 3) {return "Missing arguments.";}
+                if (command.length > 3) {return "Extra arguments.";}
+                if (!isDungeonMaster) {return "Command only available to pride_dms.";}
+                return addPride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
             case "remove":
-                if (command.length < 3) { return "Missing arguments."; }
-                if (command.length > 3) { return "Extra arguments."; }
-                if (isDungeonMaster) {
-                    return removePride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
-                }
-                else {
-                    return "Command only available to dungeon masters.";
-                }
+                if (command.length < 3) {return "Missing arguments.";}
+                if (command.length > 3) {return "Extra arguments.";}
+                if (!isDungeonMaster) {return "Command only available to pride_dms";}
+                return removePride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
             case "stats":
-                if (command.length > 1) {
-                    return stats(Util.getIdFromMention(command[1]));
-                }
-                else {
-                    return stats(authId);
-                }
+                if (command.length > 2) {return "Extra arguments.";}
+                return stats(command.length > 1 ? Util.getIdFromMention(command[1]) : authId);
             case "help":
+                if (command.length > 1) {return "Extra arguments.";}
                 return help();
             case "leaderboard":
+                if (command.length > 1) {return "Extra arguments.";}
                 return leaderboard();
             default:
                 return "Invalid command.";
@@ -106,6 +91,16 @@ public class Bot {
         output += "\n\t\tRemoving: pride -= Max(amount - ascendancy + shame, 0)";
         output += "\n\tMore features will be added later on.";
         return output;
+    }
+
+    private String ascend(String authId) {
+        if (PLAYER_MANAGER.getPlayer(authId).canAscend()) {
+            PLAYER_MANAGER.getPlayer(authId).ascend();
+            return "You have ascended!";
+        }
+        else {
+            return "You do not have enough ego to ascend.";
+        }
     }
 
     private String stats(String id) {
