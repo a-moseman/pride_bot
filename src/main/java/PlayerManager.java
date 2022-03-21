@@ -3,6 +3,8 @@ import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -95,6 +97,10 @@ public class PlayerManager {
     }
 
     public List<Player> getPlayers() {
-        return (List<Player>) PLAYERS.values();
+        List<Player> players = new ArrayList<>();
+        for (Player player : PLAYERS.values()) {
+            players.add(player);
+        }
+        return players;
     }
 }

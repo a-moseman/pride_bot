@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,13 +38,25 @@ public class Bot {
             case "add":
                 if (command.length < 3) {return "Missing arguments.";}
                 if (command.length > 3) {return "Extra arguments.";}
-                if (!isDungeonMaster) {return "Command only available to pride_dms.";}
-                return addPride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
+                if (!isDungeonMaster) {return "Command is only available to pride_dms.";}
+                if (!Util.isValidMention(command[1])) {return "Invalid user.";}
+                try {
+                    return addPride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
+                }
+                catch (Exception e) {
+                    return "Invalid user.";;
+                }
             case "remove":
                 if (command.length < 3) {return "Missing arguments.";}
                 if (command.length > 3) {return "Extra arguments.";}
-                if (!isDungeonMaster) {return "Command only available to pride_dms";}
-                return removePride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
+                if (!isDungeonMaster) {return "Command is only available to pride_dms";}
+                if (!Util.isValidMention(command[1])) {return "Invalid user.";}
+                try {
+                    return removePride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
+                }
+                catch (Exception e) {
+                    return "Invalid user.";;
+                }
             case "stats":
                 if (command.length > 2) {return "Extra arguments.";}
                 return stats(command.length > 1 ? Util.getIdFromMention(command[1]) : authId);
@@ -59,15 +72,18 @@ public class Bot {
     }
 
     private String leaderboard() {
-        // TODO: make equal players same rank
         List<Player> players = PLAYER_MANAGER.getPlayers();
         Collections.sort(players);
-        String output = "Leaderboard:";
-        for (int i = 0; i < 10; i++) {
+        StringBuilder output = new StringBuilder("Leaderboard:");
+        for (int i = 0; i < (players.size() > 9 ? 10 : players.size()); i++) {
             Player player = players.get(i);
-            output += "\n\t" + (i + 1) + ". " + player.getName();
+            // handle same rank
+            if (i > 0 && players.get(i - 1).compareTo(player) == 0) {
+                i--; // stop incrementation of i
+            }
+            output.append("\n\t").append(i + 1).append(". ").append(player.getName());
         }
-        return output;
+        return output.toString();
     }
 
     private String help() {
