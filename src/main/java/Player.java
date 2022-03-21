@@ -85,6 +85,14 @@ public class Player {
         return (long) (Math.pow(2, Math.log10(2) * x) * Math.pow(5, Math.log10(2) * x + 1));
     }
 
+    public long prideToNextEgo() {
+        return convertEgoToPride(ego + 1) - pride;
+    }
+
+    public long egoToNextAscendancy() {
+        return convertAscendancyToEgo(ascendancy + 1) - ego;
+    }
+
     //___Getter Methods___\\
 
     public String getId() {

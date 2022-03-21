@@ -88,8 +88,10 @@ public class Bot {
         Player player = PLAYER_MANAGER.getPlayer(id);
         return "Pride: " + player.getPride() +
                 "\nEgo: " + player.getEgo() +
-                "\nShame: " + player.getShame() +
-                "\nAscendancy: " + player.getAscendancy();
+                "\nPride to next Ego: " + player.prideToNextEgo() +
+                "\nAscendancy: " + player.getAscendancy() +
+                "\nEgo to next Ascendancy: " + player.egoToNextAscendancy() +
+                "\nShame: " + player.getShame();
     }
 
     private int parseAdaptiveValue(String text) {
