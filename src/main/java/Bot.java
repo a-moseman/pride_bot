@@ -80,6 +80,12 @@ public class Bot {
         output += "\n\tThe threshold and value of a level of ego follows the pattern:  level 2 ego = 40 pride, level 3 ego = 80 pride, level 4 ego = 160 pride, etc.";
         output += "\n\tExample of leveling up ego: a player reaches 50 pride, they level up to ego level 2 and their pride is reduced to 10.";
         output += "\n\tA level of ego is lost upon reaching a pride of 0. Your ego is reduced by 1 and pride set to this lower level of egos half-way-point of pride.";
+        output += "\n\tUpon reaching a threshold of ego, player's get the option of ascending.";
+        output += "\n\tAscending resets your ego to 1 and pride to 10.";
+        output += "\n\tUpon reaching pride less than or equal to 0 and ego is equal to 1, pride is reset to 10 and shame is incremented.";
+        output += "\n\tAscendancy and Shame have an effect on adding and removing pride.";
+        output += "\n\t\tAdding: pride += Max(amount + ascendancy - shame, 0)";
+        output += "\n\t\tRemoving: pride -= Max(amount - ascendancy + shame, 0)";
         output += "\n\tMore features will be added later on.";
         return output;
     }

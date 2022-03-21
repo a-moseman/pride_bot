@@ -1,7 +1,6 @@
 public class Player {
     private final String ID;
     private String name;
-
     private long pride;
     private long ego;
     private long shame;
@@ -73,7 +72,6 @@ public class Player {
     }
 
     public boolean canAscend() {
-        // TODO: test
         return convertAscendancyToEgo(ascendancy + 1) > ego;
     }
 
