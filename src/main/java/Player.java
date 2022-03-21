@@ -128,7 +128,7 @@ public class Player implements Comparable<Player>{
     @Override
     public int compareTo(Player other) {
         // TODO: test
-        if (this.getAscendancy() + this.getShame() == other.getAscendancy() + other.getShame() &&
+        if (this.getAscendancy() - this.getShame() == other.getAscendancy() - other.getShame() &&
             this.getEgo() == other.getEgo() &&
             this.getPride() == other.getPride()) {
             return 0;
