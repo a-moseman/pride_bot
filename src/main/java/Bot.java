@@ -59,7 +59,12 @@ public class Bot {
                 }
             case "stats":
                 if (command.length > 2) {return "Extra arguments.";}
-                return stats(command.length > 1 ? Util.getIdFromMention(command[1]) : authId);
+                try {
+                    return stats(command.length > 1 ? Util.getIdFromMention(command[1]) : authId);
+                }
+                catch (Exception e) {
+                    return "Invalid user.";;
+                }
             case "help":
                 if (command.length > 1) {return "Extra arguments.";}
                 return help();
