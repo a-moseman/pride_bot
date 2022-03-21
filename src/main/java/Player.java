@@ -19,9 +19,9 @@ public class Player {
     /**
      * Should be invoked during player instantiation when loading from json.
      */
-    public Player loadData(long pride, long level, long shame, long ascendancy) {
+    public Player loadData(long pride, long ego, long shame, long ascendancy) {
         this.pride = pride;
-        this.ego = level;
+        this.ego = ego;
         this.shame = shame;
         this.ascendancy = ascendancy;
         return this;
