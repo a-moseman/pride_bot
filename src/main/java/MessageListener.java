@@ -10,22 +10,21 @@ import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
 
 public class MessageListener extends ListenerAdapter { // TODO: rename
-    private String commandIndicator = "p>";
-    private Bot bot;
-    private JDA jda;
+    private String commandIndicator = "p>"; // TODO: Add command to change
+    private final Bot BOT;
 
     private long lastSaveTime = 0;
 
     public MessageListener(String token) {
         try {
-            jda = JDABuilder.createDefault(token)
+            JDA jda = JDABuilder.createDefault(token)
                     .build();
             jda.addEventListener(this);
         }
         catch (LoginException e) {
             e.printStackTrace();
         }
-        this.bot = new Bot();
+        this.BOT = new Bot();
     }
 
     @Override
@@ -43,17 +42,17 @@ public class MessageListener extends ListenerAdapter { // TODO: rename
             String authId = event.getAuthor().getId();
             String message = event.getMessage().getContentRaw();
 
-            if (!bot.knowsPlayer(authId)) {
-                bot.addPlayer(authId, new Player(authId, event.getAuthor().getName()));
+            if (!BOT.knowsPlayer(authId)) {
+                BOT.addPlayer(authId, new Player(authId, event.getAuthor().getName()));
             }
-            else if (!bot.getPlayer(authId).getName().equals(event.getAuthor().getName())){
-                bot.getPlayer(authId).setName(event.getAuthor().getName());
+            else if (!BOT.getPlayer(authId).getName().equals(event.getAuthor().getName())){
+                BOT.getPlayer(authId).setName(event.getAuthor().getName());
             }
 
             if (message.length() > 1) {
                 if (("" + message.charAt(0) + message.charAt(1)).equals(commandIndicator)) {
                     String[] command = message.substring(2).split(" ");
-                    String response = bot.doCommand(command, authId, prideDms.contains(authId));
+                    String response = BOT.doCommand(command, authId, prideDms.contains(authId));
                     channel.sendMessage(response).queue();
                 }
             }
@@ -61,8 +60,8 @@ public class MessageListener extends ListenerAdapter { // TODO: rename
 
         // save every hour on message
         // TODO: make async
-        if (System.nanoTime() - lastSaveTime >= 3600000000000l) { // if at least been an hour since last save
-            bot.save();
+        if (System.nanoTime() - lastSaveTime >= 3600000000000L) { // if at least been an hour since last save
+            BOT.save();
             lastSaveTime = System.nanoTime();
         }
     }

@@ -7,10 +7,10 @@ import java.util.Hashtable;
 
 public class PlayerManager {
     private final String PATH = "pride_bot.players.json";
-    private Hashtable<String, Player> players;
+    private final Hashtable<String, Player> PLAYERS;
 
     public PlayerManager() {
-        this.players = new Hashtable<>();
+        this.PLAYERS = new Hashtable<>();
     }
 
     public void load() {
@@ -20,7 +20,7 @@ public class PlayerManager {
             for (Object keyObject : jsonObject.keySet()) {
                 String key = (String) keyObject;
                 Player player = convertJsonToPlayer((JSONObject) jsonObject.get(key));
-                players.put(key, player);
+                PLAYERS.put(key, player);
             }
         }
         catch (Exception e) {
@@ -31,8 +31,8 @@ public class PlayerManager {
     public void save() {
         try {
             JSONObject json = new JSONObject();
-            for (String key : players.keySet()) {
-                Player player = players.get(key);
+            for (String key : PLAYERS.keySet()) {
+                Player player = PLAYERS.get(key);
                 JSONObject playerJson = convertPlayerToJson(player);
                 json.put(key, playerJson);
             }
@@ -74,11 +74,11 @@ public class PlayerManager {
     }
 
     public void addPlayer(String id, Player player) {
-        players.put(id, player);
+        PLAYERS.put(id, player);
     }
 
     public Player getPlayer(String id) {
-        return players.get(id);
+        return PLAYERS.get(id);
     }
 
     public boolean containsPlayer(String id) {
@@ -86,10 +86,10 @@ public class PlayerManager {
     }
 
     public void addPride(String id, int amount) {
-        players.get(id).addPride(amount);
+        PLAYERS.get(id).addPride(amount);
     }
 
     public void removePride(String id, int amount) {
-        players.get(id).removePride(amount);
+        PLAYERS.get(id).removePride(amount);
     }
 }

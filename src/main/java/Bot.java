@@ -1,25 +1,25 @@
 public class Bot {
-    private PlayerManager playerManager;
+    private final PlayerManager PLAYER_MANAGER;
 
     public Bot() {
-        this.playerManager = new PlayerManager();
-        this.playerManager.load();
+        this.PLAYER_MANAGER = new PlayerManager();
+        this.PLAYER_MANAGER.load();
     }
 
     public boolean knowsPlayer(String id) {
-        return playerManager.containsPlayer(id);
+        return PLAYER_MANAGER.containsPlayer(id);
     }
 
     public void addPlayer(String id, Player player) {
-        playerManager.addPlayer(id, player);
+        PLAYER_MANAGER.addPlayer(id, player);
     }
 
     public Player getPlayer(String id) {
-        return playerManager.getPlayer(id);
+        return PLAYER_MANAGER.getPlayer(id);
     }
 
     public void save() {
-        playerManager.save();
+        PLAYER_MANAGER.save();
     }
 
     public String doCommand(String[] command, String authId, boolean isDungeonMaster) {
@@ -29,8 +29,8 @@ public class Bot {
         }
         switch (command[0]) {
             case "ascend":
-                if (playerManager.getPlayer(authId).canAscend()) {
-                    playerManager.getPlayer(authId).ascend();
+                if (PLAYER_MANAGER.getPlayer(authId).canAscend()) {
+                    PLAYER_MANAGER.getPlayer(authId).ascend();
                     return "You have ascended!";
                 }
                 else {
@@ -85,7 +85,7 @@ public class Bot {
     }
 
     private String stats(String id) {
-        Player player = playerManager.getPlayer(id);
+        Player player = PLAYER_MANAGER.getPlayer(id);
         return "Pride: " + player.getPride() +
                 "\nEgo: " + player.getEgo() +
                 "\nShame: " + player.getShame() +
@@ -94,20 +94,20 @@ public class Bot {
 
     private int parseAdaptiveValue(String text) {
         int count = 0;
-        String temp = "";
+        StringBuilder temp = new StringBuilder();
         boolean hadDDelimiter = false;
         for (char c : text.toCharArray()) {
             if (c == 'd' || c == 'D') {
-                count = Integer.parseInt(temp);
+                count = Integer.parseInt(temp.toString());
                 hadDDelimiter = true;
-                temp = "";
+                temp = new StringBuilder();
             }
             else {
-                temp += c;
+                temp.append(c);
             }
         }
         if (hadDDelimiter) {
-            return DiceRoller.roll(Integer.parseInt(temp), count);
+            return DiceRoller.roll(Integer.parseInt(temp.toString()), count);
         }
         else {
             return count;
@@ -116,7 +116,8 @@ public class Bot {
 
     private String addPride(String id, int amount) {
         // TODO: optimize
-        Player player = playerManager.getPlayer(id);
+        // TODO: use PlayerManager.addPride() method
+        Player player = PLAYER_MANAGER.getPlayer(id);
         long oldLevel = player.getEgo();
         player.addPride(amount);
         String output = player.getName() + " gained " + amount + " pride.";
@@ -128,7 +129,8 @@ public class Bot {
 
     private String removePride(String id, int amount) {
         // TODO: optimize
-        Player player = playerManager.getPlayer(id);
+        // TODO: use PlayerManager.removePride() method
+        Player player = PLAYER_MANAGER.getPlayer(id);
         long oldLevel = player.getEgo();
         long oldDeaths = player.getShame();
         player.removePride(amount);
