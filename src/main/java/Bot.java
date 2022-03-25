@@ -1,4 +1,3 @@
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,7 +43,7 @@ public class Bot {
                     return addPride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
                 }
                 catch (Exception e) {
-                    return "Invalid user.";;
+                    return "Invalid user.";
                 }
             case "remove":
                 if (command.length < 3) {return "Missing arguments.";}
@@ -55,7 +54,7 @@ public class Bot {
                     return removePride(Util.getIdFromMention(command[1]), parseAdaptiveValue(command[2]));
                 }
                 catch (Exception e) {
-                    return "Invalid user.";;
+                    return "Invalid user.";
                 }
             case "stats":
                 if (command.length > 2) {return "Extra arguments.";}
@@ -63,7 +62,7 @@ public class Bot {
                     return stats(command.length > 1 ? Util.getIdFromMention(command[1]) : authId);
                 }
                 catch (Exception e) {
-                    return "Invalid user.";;
+                    return "Invalid user.";
                 }
             case "help":
                 if (command.length > 1) {return "Extra arguments.";}
@@ -158,7 +157,6 @@ public class Bot {
 
     private String addPride(String id, int amount) {
         // TODO: optimize
-        // TODO: use PlayerManager.addPride() method
         Player player = PLAYER_MANAGER.getPlayer(id);
         long oldLevel = player.getEgo();
         player.addPride(amount);
@@ -171,7 +169,6 @@ public class Bot {
 
     private String removePride(String id, int amount) {
         // TODO: optimize
-        // TODO: use PlayerManager.removePride() method
         Player player = PLAYER_MANAGER.getPlayer(id);
         long oldLevel = player.getEgo();
         long oldDeaths = player.getShame();

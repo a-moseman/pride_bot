@@ -3,6 +3,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -31,16 +32,30 @@ public class MessageListener extends ListenerAdapter { // TODO: rename
     public void onMessageReceived(MessageReceivedEvent event) {
         // determine pride dms
         // TODO: attempt to optimize
+        // TODO: BUG, the code for determining roles does not work
+        /*
         Guild guild = event.getGuild();
         ArrayList<String> prideDms = new ArrayList<>();
         for (Member member : guild.getMembersWithRoles(guild.getRolesByName("pride_dm", false))) {
             prideDms.add(member.getId());
         }
+        */
+
 
         if (!event.getAuthor().isBot()) { // filter out bot commands
             MessageChannel channel = event.getChannel();
             String authId = event.getAuthor().getId();
             String message = event.getMessage().getContentRaw();
+
+            // TODO: test to see if checking for pride_dm works
+            Guild guild = event.getGuild();
+            Member member = guild.getMember(event.getAuthor());
+            boolean isPrideDM = false;
+            for (Role role : member.getRoles()) {
+                if (role.getName().equals("pride_dm")) {
+                    isPrideDM = true;
+                }
+            }
 
             if (!BOT.knowsPlayer(authId)) {
                 BOT.addPlayer(authId, new Player(authId, event.getAuthor().getName()));
@@ -52,7 +67,7 @@ public class MessageListener extends ListenerAdapter { // TODO: rename
             if (message.length() > 1) {
                 if (("" + message.charAt(0) + message.charAt(1)).equals(commandIndicator)) {
                     String[] command = message.substring(2).split(" ");
-                    String response = BOT.doCommand(command, authId, prideDms.contains(authId));
+                    String response = BOT.doCommand(command, authId, isPrideDM);
                     channel.sendMessage(response).queue();
                 }
             }

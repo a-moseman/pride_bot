@@ -88,14 +88,6 @@ public class PlayerManager {
         return getPlayer(id) != null;
     }
 
-    public void addPride(String id, int amount) {
-        PLAYERS.get(id).addPride(amount);
-    }
-
-    public void removePride(String id, int amount) {
-        PLAYERS.get(id).removePride(amount);
-    }
-
     public List<Player> getPlayers() {
         List<Player> players = new ArrayList<>();
         for (Player player : PLAYERS.values()) {
