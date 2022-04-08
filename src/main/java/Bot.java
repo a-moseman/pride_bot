@@ -134,6 +134,7 @@ public class Bot {
     }
 
     private int parseAdaptiveValue(String text) {
+        // TODO: BUG, does not work with non dice amount
         int count = 0;
         StringBuilder temp = new StringBuilder();
         boolean hadDDelimiter = false;
