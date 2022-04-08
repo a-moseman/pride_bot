@@ -4,7 +4,6 @@ import org.json.simple.parser.JSONParser;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
 

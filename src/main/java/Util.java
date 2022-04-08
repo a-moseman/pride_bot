@@ -1,6 +1,6 @@
 public class Util {
     public static String getIdFromMention(String mention) {
-        return mention.substring(3, mention.length() - 1);
+        return mention.substring(2, mention.length() - 1);
     }
 
     public static boolean isValidMention(String mention) {

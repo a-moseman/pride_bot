@@ -6,9 +6,10 @@ import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 
 import javax.security.auth.login.LoginException;
-import java.util.ArrayList;
 
 public class MessageListener extends ListenerAdapter { // TODO: rename
     private String commandIndicator = "p>"; // TODO: Add command to change
@@ -19,6 +20,8 @@ public class MessageListener extends ListenerAdapter { // TODO: rename
     public MessageListener(String token) {
         try {
             JDA jda = JDABuilder.createDefault(token)
+                    .setMemberCachePolicy(MemberCachePolicy.ALL)
+                    .enableIntents(GatewayIntent.GUILD_MEMBERS)
                     .build();
             jda.addEventListener(this);
         }

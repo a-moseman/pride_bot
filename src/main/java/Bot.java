@@ -152,7 +152,7 @@ public class Bot {
             return DiceRoller.roll(Integer.parseInt(temp.toString()), count);
         }
         else {
-            return count;
+            return Integer.parseInt(temp.toString());
         }
     }
 
